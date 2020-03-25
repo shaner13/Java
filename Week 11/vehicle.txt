@@ -1,0 +1,41 @@
+/*
+ * Vehicle: This class represents a vehicle.
+ * Author: Shane Riedy
+ * Date 30/01/2020
+*/
+
+package com.lab1.test;
+
+public class Vehicle {
+
+	String Owner_Name;
+	String Reg_No;
+	String Colour;
+	int Max_Speed;
+	int No_of_wheels;
+	boolean Automatic;
+	
+	public Vehicle(String Owner_Name, String Reg_No){
+		
+		this.Owner_Name = Owner_Name.toUpperCase();
+		this.Reg_No = Reg_No.toUpperCase();
+		
+	}
+	
+	public Vehicle(String Owner_Name, String Reg_No, String Colour, int Max_Speed, int No_of_wheels, boolean Automatic){
+		
+		this.Owner_Name = Owner_Name.toUpperCase();
+		this.Reg_No = Reg_No.toUpperCase();
+		this.Colour = Colour.toUpperCase();
+		this.Max_Speed = Max_Speed;
+		this.No_of_wheels = No_of_wheels;
+		this.Automatic = Automatic;
+		
+	}
+	
+	
+	public String toString(){
+		return "The vehicle belongs to: "+Owner_Name+" and has the registration number: "+Reg_No+" and is:"+Colour+" and has a max speed of:"+Max_Speed+" and has:"
+	    +No_of_wheels+" wheels.";
+	}
+}

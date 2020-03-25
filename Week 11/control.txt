@@ -1,0 +1,26 @@
+/****************
+  
+*  Control: 
+*  Author: Shane Riedy
+*  Date: 30/01/2020
+*  
+
+
+*****************/
+
+package com.lab1.test;
+
+public class Control {
+
+	public static void main(String[] args) {
+		System.out.println("Hello World.");
+		
+		Vehicle Vehicle1 = new Vehicle("Shane","123456");
+		Vehicle Vehicle2 = new Vehicle("Shane2","123456","RED",1989,13,false);
+		
+		System.out.println(Vehicle1);
+		System.out.println(Vehicle2);
+	
+	}
+
+}
