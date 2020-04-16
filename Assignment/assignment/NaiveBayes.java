@@ -15,7 +15,7 @@ public class NaiveBayes {
 	double pIfYes;
 	double pIfNo;
 	double probability;
-	float total;
+	double total;
 	
 	ArrayList<Entry> dataEntries = new ArrayList<Entry>();	
 	
@@ -48,7 +48,6 @@ public class NaiveBayes {
 			hasCOVID19.add(en.getHasCOVID19());
 			
 			if (en.getHasCOVID19().equals("yes")) {
-				
 				temperatureIfCOVID19.add(en.getTemperature());
 				achesIfCOVID19.add(en.getAches());
 				coughIfCOVID19.add(en.getCough());
@@ -65,7 +64,7 @@ public class NaiveBayes {
 		pIfYes *= Collections.frequency(coughIfCOVID19,newEntry.getCough()) / total;
 		pIfYes *= Collections.frequency(soreThroatIfCOVID19,newEntry.getSoreThroat()) / total;
 		pIfYes *= Collections.frequency(dangerZoneIfCOVID19,newEntry.getDangerZone()) / total;
-		pIfYes *= (double) Collections.frequency(hasCOVID19,"yes") / dataEntries.size();
+		pIfYes *= (double) total / dataEntries.size();
 		
 		total = Collections.frequency(hasCOVID19, "no");
 		pIfNo += (Collections.frequency(temperature,newEntry.getTemperature()) - Collections.frequency(temperatureIfCOVID19,newEntry.getTemperature())) / total;
@@ -73,7 +72,7 @@ public class NaiveBayes {
 		pIfNo *= (Collections.frequency(aches,newEntry.getAches()) - Collections.frequency(achesIfCOVID19,newEntry.getAches())) /total;
 		pIfNo *= (Collections.frequency(soreThroat,newEntry.getSoreThroat()) - Collections.frequency(soreThroatIfCOVID19,newEntry.getSoreThroat())) /total;
 		pIfNo *= (Collections.frequency(dangerZone,newEntry.getDangerZone()) - Collections.frequency(dangerZoneIfCOVID19,newEntry.getDangerZone())) / total;
-		pIfNo *= (double) Collections.frequency(hasCOVID19,"no") / dataEntries.size();
+		pIfNo *= (double) total / dataEntries.size();
 		
 		probability = (pIfYes / (pIfYes+pIfNo)) * 100;
 		return probability;
