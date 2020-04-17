@@ -8,6 +8,7 @@ package assignment;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.lang.Math;
 
 public class NaiveBayes {
 	
@@ -16,6 +17,11 @@ public class NaiveBayes {
 	double pIfNo;
 	double probability;
 	double total;
+	double accuracy;
+	int i = 0;
+	
+	ArrayList<String> correctArray = new ArrayList<String>();
+	ArrayList<String> predictArray = new ArrayList<String>();
 	
 	ArrayList<Entry> dataEntries = new ArrayList<Entry>();	
 	
@@ -33,26 +39,32 @@ public class NaiveBayes {
 	ArrayList<String> dangerZoneIfCOVID19 = new ArrayList<String>();
 
 	//Methods
-	public NaiveBayes(FileProcessor file) {	
+	public NaiveBayes(FileProcessor file, Boolean test) {	
 		file.getData(dataEntries);
-		findFrequency();
+		if (test == false) { findFrequency(dataEntries.size());}	
+		else {
+			double split = ((float)dataEntries.size()/(float)100)*70;
+			findFrequency((int)split); 
+		}
 	}
 
-	public void findFrequency() {	
-		for (Entry en : dataEntries) {		
-			temperature.add(en.getTemperature());
-			aches.add(en.getAches());
-			cough.add(en.getCough());
-			soreThroat.add(en.getSoreThroat());
-			dangerZone.add(en.getDangerZone());
-			hasCOVID19.add(en.getHasCOVID19());
-			
-			if (en.getHasCOVID19().equals("yes")) {
-				temperatureIfCOVID19.add(en.getTemperature());
-				achesIfCOVID19.add(en.getAches());
-				coughIfCOVID19.add(en.getCough());
-				soreThroatIfCOVID19.add(en.getSoreThroat());
-				dangerZoneIfCOVID19.add(en.getDangerZone());	
+	public void findFrequency(int size) {
+		for(i=0;i<size;i++) {
+			for (Entry en : dataEntries) {		
+				temperature.add(en.getTemperature());
+				aches.add(en.getAches());
+				cough.add(en.getCough());
+				soreThroat.add(en.getSoreThroat());
+				dangerZone.add(en.getDangerZone());
+				hasCOVID19.add(en.getHasCOVID19());
+				
+				if (en.getHasCOVID19().equals("yes")) {
+					temperatureIfCOVID19.add(en.getTemperature());
+					achesIfCOVID19.add(en.getAches());
+					coughIfCOVID19.add(en.getCough());
+					soreThroatIfCOVID19.add(en.getSoreThroat());
+					dangerZoneIfCOVID19.add(en.getDangerZone());	
+				}
 			}
 		}
 	}
@@ -76,5 +88,27 @@ public class NaiveBayes {
 		
 		probability = (pIfYes / (pIfYes+pIfNo)) * 100;
 		return probability;
+	}
+	
+	public double testAccuracy() {
+		double accuracy = 0;
+		int i = 0;
+		double split = ((float)dataEntries.size()/(float)100)*70;
+		
+		for (i=(int)split; i<dataEntries.size(); i++) {
+				Entry en = dataEntries.get(i);
+				correctArray.add(en.getHasCOVID19());
+				double diagnosis = calcProbs(new Entry(en.getTemperature(), en.getAches(), en.getCough(), en.getSoreThroat(), en.getSoreThroat()));
+				if (diagnosis>0.5) { predictArray.add("yes"); }
+				else { predictArray.add("no"); }
+		}
+		
+		for(i=0;i<correctArray.size();i++) {
+			if (correctArray.get(i).equals(predictArray.get(i))) {
+				accuracy++;
+			}
+		}
+		accuracy /= correctArray.size();
+		return accuracy * 100;
 	}
 }
