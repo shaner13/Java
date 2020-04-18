@@ -4,15 +4,17 @@
   Author: Shane Riedy
 */
 
-//Importing components
 package assignment;
 
+//Importing components
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.UIManager;
 
 import java.awt.Font;
@@ -22,9 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-
 
 public class GUI extends JFrame implements ActionListener
 {
@@ -33,8 +32,6 @@ public class GUI extends JFrame implements ActionListener
 	JButton predictButton, testAccuracyButton;
 	
 	JLabel addLabel, result, accuracy;
-	
-	JTextField tempField, achesField, coughField, soreThroatField, dangerZoneField;
 	
 	JCheckBox achesBox, coughBox, soreThroatBox, dangerZoneBox;
 	
@@ -46,9 +43,11 @@ public class GUI extends JFrame implements ActionListener
 	{
 		super("Coronavirus Diagnostic Tool");
 		
+		//Setting up the window and layout
 		setResizable(false);
 		setSize(400,300);
 		setLayout(new BorderLayout());
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
@@ -94,6 +93,7 @@ public class GUI extends JFrame implements ActionListener
 		testAccuracyButton.addActionListener(this);
 		testAccuracyButton.setBackground(new Color(255,255,207));
 		
+		//Adding components to panels
 		instructionPanel.add(addLabel);
 		addPanel.add(achesBox);
 		addPanel.add(coughBox);
@@ -104,6 +104,7 @@ public class GUI extends JFrame implements ActionListener
 		buttonPanel.add(predictButton);
 		buttonPanel.add(testAccuracyButton);
 		
+		//Adding panels to the screen
 		add(instructionPanel, BorderLayout.NORTH);
 		add(addPanel, BorderLayout.CENTER);
 		add(buttonPanel, BorderLayout.SOUTH);
@@ -114,7 +115,8 @@ public class GUI extends JFrame implements ActionListener
 	
 	public void actionPerformed(ActionEvent e)
 	{
-		
+		//If the test accuracy button is selected it will create a new NaiveBayes object and return the
+		//results of the test accuracy function.
 		if (e.getSource()==testAccuracyButton) {
 			FileProcessor file = new FileProcessor("src/MLdata.csv");
 			NaiveBayes test = new NaiveBayes(file, true);
@@ -122,15 +124,20 @@ public class GUI extends JFrame implements ActionListener
 			result.setText("Classifier accuracy is: "+String.format("%.2f", accuracy)+"%.");
 		}
 		
-		
+		//If the predict button is selected the values from the components will be assigned to 
+		//the values needed to create a new entry and then used to create a new entry and the 
+		//probability will be calculated.
 		else if (e.getSource() == predictButton)
 		{
+			//Assigning variables with the values from the components.
 			temp = (String) tempMenu.getSelectedItem();
 			if(achesBox.isSelected()) {aches = "yes"; } else {aches = "no"; }
 			if(coughBox.isSelected()) {cough = "yes"; } else {cough = "no"; }
 			if(soreThroatBox.isSelected()) {soreThroat = "yes"; } else {soreThroat = "no"; }
 			if(dangerZoneBox.isSelected()) {dangerZone = "yes"; } else {dangerZone = "no"; }
 			
+			//Creating a new fileprocessor object and using this to create a new NaiveBayes object
+			//then calculating the probability for this entry.
 			try
 			{
 				FileProcessor file = new FileProcessor("src/MLdata.csv");
@@ -140,8 +147,9 @@ public class GUI extends JFrame implements ActionListener
 			}
 			catch (Exception ex)
 			{
-				JOptionPane.showMessageDialog(this,"Error. Invalid data.");
+				result.setText("Error. Invalid data.");
 			}
 		}
 			
+	}
 }
