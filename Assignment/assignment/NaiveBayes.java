@@ -39,6 +39,9 @@ public class NaiveBayes {
 	ArrayList<String> dangerZoneIfCOVID19 = new ArrayList<String>();
 
 	//Methods
+	
+	//Main method. Will populate the dataEntries array with entries then find the frequencies of 
+	//the symptoms for the calculations. If test == true the program will only train itself on 70% of the data.
 	public NaiveBayes(FileProcessor file, Boolean test) {	
 		file.getData(dataEntries);
 		if (test == false) { findFrequency(dataEntries.size());}	
@@ -47,7 +50,9 @@ public class NaiveBayes {
 			findFrequency((int)split); 
 		}
 	}
-
+	
+	//Getting the frequencies of the symptoms. The first set will be the total and the second set will
+	//be the 'probability if yes', subtracting the first set from the second will give the probability if no.
 	public void findFrequency(int size) {
 		for(i=0;i<size;i++) {
 			for (Entry en : dataEntries) {		
@@ -69,6 +74,8 @@ public class NaiveBayes {
 		}
 	}
 	
+	//Using the collections.frequency to get the frequency of each value in the array. Then dividing
+	//by the total. This is done for each symptom and mulitplied by each other to get probability if yes/no.
 	public double calcProbs(Entry newEntry) {
 		total = Collections.frequency(hasCOVID19, "yes");
 		pIfYes += Collections.frequency(temperatureIfCOVID19,newEntry.getTemperature()) / total;
@@ -86,15 +93,19 @@ public class NaiveBayes {
 		pIfNo *= (Collections.frequency(dangerZone,newEntry.getDangerZone()) - Collections.frequency(dangerZoneIfCOVID19,newEntry.getDangerZone())) / total;
 		pIfNo *= (double) total / dataEntries.size();
 		
+		//Getting the result as a percentage and returning it.
 		probability = (pIfYes / (pIfYes+pIfNo)) * 100;
 		return probability;
 	}
 	
+	//Testing the accuracy of the classifier. It will train itself on 70% of the data and compare 
+	//the correct results to the predicted results of the other 30%. This is returned as a percentage.
 	public double testAccuracy() {
 		double accuracy = 0;
 		int i = 0;
 		double split = ((float)dataEntries.size()/(float)100)*70;
 		
+		//Filling arrays with the correct and predicted results to compare.
 		for (i=(int)split; i<dataEntries.size(); i++) {
 				Entry en = dataEntries.get(i);
 				correctArray.add(en.getHasCOVID19());
@@ -103,11 +114,14 @@ public class NaiveBayes {
 				else { predictArray.add("no"); }
 		}
 		
+		//Comparing the results of "hasCOVID19" to each other.
 		for(i=0;i<correctArray.size();i++) {
 			if (correctArray.get(i).equals(predictArray.get(i))) {
 				accuracy++;
 			}
 		}
+		
+		//Getting the result as a percentage and returning it.
 		accuracy /= correctArray.size();
 		return accuracy * 100;
 	}
