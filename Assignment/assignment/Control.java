@@ -3,7 +3,6 @@
  	
  	Author: Shane Riedy
  */
-package assignment;
 
 public class Control
 {
