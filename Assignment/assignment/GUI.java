@@ -118,7 +118,7 @@ public class GUI extends JFrame implements ActionListener
 		//If the test accuracy button is selected it will create a new NaiveBayes object and return the
 		//results of the test accuracy function.
 		if (e.getSource()==testAccuracyButton) {
-			FileProcessor file = new FileProcessor("MLdata.csv");
+			FileProcessor file = new FileProcessor("src/MLdata.csv");
 			NaiveBayes test = new NaiveBayes(file, true);
 			double accuracy = test.testAccuracy();
 			result.setText("Classifier accuracy is: "+String.format("%.2f", accuracy)+"%.");
@@ -140,7 +140,7 @@ public class GUI extends JFrame implements ActionListener
 			//then calculating the probability for this entry.
 			try
 			{
-				FileProcessor file = new FileProcessor("MLdata.csv");
+				FileProcessor file = new FileProcessor("src/MLdata.csv");
 				NaiveBayes test = new NaiveBayes(file, false);
 				double diagnosis = test.calcProbs(new Entry(temp.toLowerCase(), aches, cough, soreThroat, dangerZone));
 				result.setText("The chances of having COVID-19 are: "+String.format("%.2f", diagnosis)+"%.");
