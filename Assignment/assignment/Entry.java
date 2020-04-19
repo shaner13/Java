@@ -3,7 +3,6 @@
  	
  	Author: Shane Riedy
  */
-package assignment;
 
 import java.util.Scanner;
 
