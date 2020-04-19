@@ -3,8 +3,6 @@
  	
  	Author: Shane Riedy
  */
-package assignment;
-
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
