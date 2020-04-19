@@ -4,7 +4,6 @@
  	
  	Author: Shane Riedy
  */
-package assignment;
 
 import java.util.ArrayList;
 import java.util.Collections;
