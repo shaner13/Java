@@ -1,6 +1,9 @@
 /*
  	Description: This class will find the frequencies of the datasheet attributes
  	and calculate the probabilities of a new entry using the Naive Bayes classifier.
+	The test accuracy method will test the classifier accuracy.
+	The findFrequency method will populate array lists for the calculations.
+	The calcProbs method will perform the calculations and return the percentage chance of the entry having COVID-19
  	
  	Author: Shane Riedy
  */
