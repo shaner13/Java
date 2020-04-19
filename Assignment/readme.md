@@ -1,7 +1,7 @@
 Naive Bayes Machine Learning Model
 Java Assignment by Shane Riedy
 
-In your own words write a short (< 200 words) how your application works
+  In your own words write a short (< 200 words) how your application works
 
 This program trains itself on a CSV file with records of COVID-19 patients and their symptoms and predicts the probability of a new entry having COVID-19 using the Naive Bayes machine learning classifier. 
 
@@ -23,7 +23,7 @@ The user may also select the Test Accuracy button which will train the program o
 
 
 
-The classes you created, with a description.
+  The classes you created, with a description.
 
 Control:
 This class simply instantiates a new GUI object.
